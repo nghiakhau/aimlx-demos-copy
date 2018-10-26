@@ -39,6 +39,7 @@ from argumentation import argumentation
 from summarization import summarization
 from grocery import grocery
 from emotion import emotion
+from recommendations import recommendations
 from go_chatbot import go_chatbot
 from material import material
 from chestxray import chestxray
@@ -63,6 +64,7 @@ app.register_blueprint(argumentation, url_prefix='/argumentation')
 app.register_blueprint(slot_filling_api, url_prefix='/slotfilling')
 
 app.register_blueprint(sfid, url_prefix='/sfid')
+app.register_blueprint(recommendations, url_prefix='/recommendations')
 app.register_blueprint(go_chatbot, url_prefix='/go_chatbot')
 app.register_blueprint(summarization, url_prefix='/summarization')
 app.register_blueprint(sfid_api, url_prefix='/sfid_old')
@@ -88,4 +90,3 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1')
-    

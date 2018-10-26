@@ -5,8 +5,13 @@ var ChatbotLayout = {
     samplesDisplay: [],
     isLoading: false,
     dataInput: '',
-    textStartingConversation: 'Ask me question.',
     minInputLength: 2,
+    textStartingConversation: 'Good everning, wanna to see a movie? Please give me three movies that you liked.',
+    nbMovieNeeded: 3,
+    inputMovieName: [],
+    moviesName: [],
+    moviesId: [],
+    suggestFunction: function (data) {},
     submitFunction: function (data) {
     },
     config: function (options) {
@@ -14,6 +19,11 @@ var ChatbotLayout = {
             this.submitFunction = options.submitFunction;
         } else {
             throw "SubmitFunction is not defined in config method.";
+        }
+        if (options.suggestFunction) {
+            this.suggestFunction = options.suggestFunction;
+        } else {
+            throw "SuggestFunction is not defined in config method.";
         }
         this.initializeUiEventHandler();
         if (options.sampleLink) {
@@ -121,7 +131,7 @@ var ChatbotLayout = {
         if (this.dataInput.length > this.minInputLength && !this.isLoading) {
             this.pushMessage(this.dataInput, 'client');
             this.submitFunction(this.dataInput);
-            this.setLoadingState();
+            //this.setLoadingState();
             $('#input-submit').val('');
         }
     },
@@ -138,6 +148,7 @@ var ChatbotLayout = {
             }
         }).on('input', function () {
                 self.dataInput = this.value;
+                self.suggestFunction(self.dataInput)
                 if (self.dataInput.length > self.minInputLength) {
                     $('#btn-submit').removeClass('disabled');
                 } else {
